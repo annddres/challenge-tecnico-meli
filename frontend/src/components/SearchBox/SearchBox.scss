@@ -1,0 +1,19 @@
+.search-box-input {
+  width: 40vw;
+  height: 25px;
+  max-width: 600px;
+  border: 0;
+  padding-left: 10px;
+}
+
+.search-box-form {
+  display: flex;
+}
+
+.search-box-btn {
+  width: 30px;
+  background: no-repeat url("../../assets/ic_Search.png") 50% 50% #efecec;
+  border: 0;
+  background-size: 18px;
+  cursor: pointer;
+}
