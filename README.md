@@ -9,7 +9,7 @@ move to directory : `backend`
 
 ### `npm install`
 
-Install the dependences.\
+Install the dependences.
 
 ### `npm start`
 
@@ -22,7 +22,7 @@ move to directory : `frontend`
 
 ### `npm install`
 
-Install the dependences.\
+Install the dependences.
 
 ### `npm start`
 
