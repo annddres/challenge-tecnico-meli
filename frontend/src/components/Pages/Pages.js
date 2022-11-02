@@ -1,10 +1,11 @@
 import React from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useSearchParams } from "react-router-dom";
 import ProductView from "../../views/Product";
 import SearchView from "../../views/Search";
 
 export function Pages() {
-  const search = useLocation().search;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const search = searchParams.get("search")
 
   return (
       <Routes>

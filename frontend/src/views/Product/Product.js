@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
+import DocumentMeta from 'react-document-meta';
 import ItemDetail from "../../components/ItemDetail";
 
 export function Product() {
@@ -8,6 +9,12 @@ export function Product() {
   const id = params.id;
   const [item, setItem] = useState({});
   const [category, setCategory] = useState({});
+
+  const meta = {
+    title: `Mercado Libre - ${item.title}`,
+    description: item.description,
+    meta: { name: { keywords: `Mercado Libre, ${item.title}, ${category}` } }
+  };
 
   useEffect(() => {
     fetch(`http://localhost:3001/api/items/${id}`)
@@ -25,6 +32,7 @@ export function Product() {
 
   return (JSON.stringify(item) === '{}') ? null : (
     <>
+    <DocumentMeta {...meta} />
     <p>{category}</p>
     <div className="detail-view">
       <ItemDetail item={item} />

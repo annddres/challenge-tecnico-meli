@@ -1,31 +1,26 @@
 
-## Clone
+## About the app
 
-Clone the repository
+There are two separated apps.
+Backend: The Server built in NodeJS + Express 
+Frontend: The Client built in React JS + SASS + HTML
 
-## Backend
+## Get Code
 
-move to directory : `backend`
+Clone the repository and open a terminal (I suggest in Visual Studio Code)
 
-### `npm install`
+## Run Backend
 
-Install the dependences.
-
-### `npm start`
-
-Runs the app in the development mode.\
+Move to directory "backend"
+Exectue `npm install` to install the dependences.
+Execute `npm start` to runs de api
 Open [http://localhost:3001](http://localhost:3001) to view it in your browser.
 
-## Frontend
+## Run Frontend
 
-move to directory : `frontend`
-
-### `npm install`
-
-Install the dependences.
-
-### `npm start`
-
-Runs the app in the development mode.\
+Split the terminal and move to directory "frontend"
+Exectue `npm install` to install the dependences.
+Execute `npm start` to runs de app
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
+## Run Frontend
