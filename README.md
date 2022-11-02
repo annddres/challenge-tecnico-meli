@@ -22,5 +22,3 @@ Split the terminal and move to directory "frontend".\
 Exectue `npm install` to install the dependences.\
 Execute `npm start` to runs de app.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-## Run Frontend
