@@ -33,7 +33,7 @@ export function Product() {
   return (JSON.stringify(item) === '{}') ? null : (
     <>
     <DocumentMeta {...meta} />
-    <p>{category}</p>
+    <p className="breadcrumb">{category}</p>
     <div className="detail-view">
       <ItemDetail item={item} />
     </div>

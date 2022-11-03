@@ -1,0 +1,6 @@
+{
+    "PORT" : 3001,
+    "apiML" : "https://api.mercadolibre.com",
+    "author" : { "name": "Andres", "lastname": "Jimenez" },
+    "limit" : 4
+}

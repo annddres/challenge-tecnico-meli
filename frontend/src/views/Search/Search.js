@@ -31,9 +31,11 @@ export function Search({ search }) {
   return (JSON.stringify(items) === '{}') ? null :  (
     <>
       <DocumentMeta {...meta} />
+      <p className="breadcrumb">
         { categories.map(category => (
            ` / ${category}`
         ))}
+      </p>
       <ItemsList items={items} />
     </>
   );

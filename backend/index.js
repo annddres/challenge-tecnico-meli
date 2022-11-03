@@ -1,38 +1,38 @@
 const express = require("express");
-const request = require('request');
+//const request = require('request'); // deprecated
+const axios = require('axios');
 const cors = require("cors");
+const config = require('./config.json');
 const app = express();
-
-const PORT = 3001;
-const apiMELI = "https://api.mercadolibre.com";
-const author = { name: "Andres", lastname: "Jimenez" }; 
 
 app.use(cors());
 
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
+app.listen(config.PORT, () => {
+  console.log(`Server listening on ${config.PORT}`);
 });
 
-// Api MercadoLibre
-var client = function (resource, callback) {
-    request(apiMELI + resource, function (err, res, body) {
-      if (!err && res.statusCode == 200) {
-          callback(JSON.parse(body));
-      }
-    });
+// Api MELI
+var request = function(url, callback){
+    axios.get(url)
+        .then((response) => {
+          callback(response.data);
+        })
+        .catch((err) => {
+          console.log(err);
+          callback(null);
+        });
 }
 
-// Api Busqueda Productos
+// api Buscar Productos
 app.get('/api/items/', (req, res) => {
    
     var text = req.query.q;
-    client("/sites/MLA/search?q=" + text, function(results) {
+    // api documentation: limit=n (Solo n resultados)
+    request(`${config.apiML}/sites/MLA/search?q=${text}&limit=${config.limit}`, function(data) {
 
-        // Cambio de Formato (Solo 4 Productos)
+        // Cambio de formato
         var items = [];
-        var l = (results.paging.total > 4) ? 4 : results.paging.total;
-        for(var n = 0; n < l; n++) {
-            var result = results.results[n];
+        data.results.forEach(result => {
             items.push({
                 id: result.id,
                 title: result.title,
@@ -46,10 +46,10 @@ app.get('/api/items/', (req, res) => {
                 free_shipping: result.shipping.free_shipping,
                 location: result.address.state_name
             });
-        };
+        });
 
-        // Lista de Categorias
-        var cv = results.available_filters.find(f => f.id="category").values;
+        // Lista de categorias
+        var cv = data.available_filters.find(f => f.id="category").values;
         var categories = cv.map(v => v.name);
         
         // Categoria con mayor resultados
@@ -58,7 +58,7 @@ app.get('/api/items/', (req, res) => {
 
         // Respuesta
         res.send({
-            author: author,
+            author: config.author,
             categories: categories,
             items: items,
             category: category
@@ -68,15 +68,15 @@ app.get('/api/items/', (req, res) => {
 
   });
 
-// Api Detalle Producto
+// api Detalle Producto
 app.get('/api/items/:id', (req, res) => {
    
     var id = req.params.id;
-    client("/items/" + id, function(result) {
-        client("/items/" + id + "/description", function(description) {
-            client("/categories/" + result.category_id, function(category) {
+    request(`${config.apiML}/items/${id}`, function(result) {
+        request(`${config.apiML}/items/${id}/description`, function(description) {
+            request(`${config.apiML}/categories/${result.category_id}`, function(category) {
 
-                // Cambio de Formato
+                // Cambio de formato
                 var item = {
                     id: result.id,
                     title: result.title,
@@ -94,7 +94,7 @@ app.get('/api/items/:id', (req, res) => {
 
                 // Respuesta
                 res.send({
-                    author: author,
+                    author: config.author,
                     item: item,
                     category: category.name
                 });
@@ -105,7 +105,7 @@ app.get('/api/items/:id', (req, res) => {
 
  });
 
- // Metodo parte decimal de un numero
+// Metodo parte decimal de un numero
 Number.prototype.decimals = function () {
     if(Math.floor(this.valueOf()) === this.valueOf()) return 0;
     return this.toString().split(".")[1] * 1 || 0;
